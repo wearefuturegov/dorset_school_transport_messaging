@@ -1,0 +1,14 @@
+defaults: &defaults
+  adapter: postgresql
+  host: localhost
+
+development:
+  <<: *defaults
+  database: dorset_school_transport_messaging_development
+
+test: &TEST
+  <<: *defaults
+  database: dorset_school_transport_messaging_test
+
+cucumber:
+  <<: *TEST
