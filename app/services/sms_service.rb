@@ -29,14 +29,14 @@ class SmsService
     
     def cancellation_message
       """
-        This is Surrey County Council's school transport service. Unfortunately
+        This is Dorset County Council's school transport service. Unfortunately
         your school bus service on route #{@route} has been cancelled for today
       """.squish
     end
     
     def delay_message
       """
-        This is Surrey County Council's school transport service. There is a
+        This is Dorset County Council's school transport service. There is a
         delay to your bus service on route #{@route} by approximately
         #{@delay_length} minutes.
       """.squish
