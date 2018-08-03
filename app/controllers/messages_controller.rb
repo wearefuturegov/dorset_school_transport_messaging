@@ -12,7 +12,7 @@ class MessagesController < ApplicationController
   private
     
     def sms_params
-      params.permit(:type, :delay_length)
+      params.permit(:type, :delay_length, :reason)
     end
   
 end

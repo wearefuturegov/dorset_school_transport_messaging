@@ -37,7 +37,7 @@ class SmsService
     
     def cancellation_message
       """
-        #{intro} has been cancelled for today
+        #{intro} has been cancelled for today. This is due to #{@reason}
       """.squish
     end
     

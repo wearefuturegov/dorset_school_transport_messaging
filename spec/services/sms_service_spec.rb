@@ -48,7 +48,7 @@ describe SmsService do
   
   context 'with a cancellation' do
   
-    let(:params) { { number: number, route: route, type: 'cancel' } }
+    let(:params) { { number: number, route: route, type: 'cancel', reason: 'snow' } }
     
     it 'sends a message' do
       expect { subject.perform }.to change { FakeSMS.messages.count }.by(1)
@@ -58,6 +58,7 @@ describe SmsService do
       subject.perform
       expect(body).to match(/route #{route}/)
       expect(body).to match(/has been cancelled for today/)
+      expect(body).to match(/This is due to snow/)
     end
     
   end
