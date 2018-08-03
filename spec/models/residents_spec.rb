@@ -10,7 +10,7 @@ describe Resident, type: :model do
   
   describe '#send_sms' do
     
-    let(:subject) { resident.send_sms('delay', '30') }
+    let(:subject) { resident.send_sms(type: 'delay', delay_length: '30') }
     let(:job) { QueJob.first }
     
     it 'queues up a sms message' do
@@ -20,7 +20,12 @@ describe Resident, type: :model do
     it 'queues the correct args' do
       subject
       expect(job.job_class).to eq('SendSMS')
-      expect(job.args).to eq([resident.phone_number, 'delay', resident.route.id, '30'])
+      expect(job.args.first).to match({
+        'phone_number' => resident.phone_number,
+        'type' => 'delay',
+        'route' => resident.route.id,
+        'delay_length' => '30'
+      })
     end
     
   end

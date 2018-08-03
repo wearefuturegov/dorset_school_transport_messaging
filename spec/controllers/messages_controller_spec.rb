@@ -23,7 +23,7 @@ describe MessagesController, type: :controller do
       expect(controller).to receive(:residents) { route_1_residents }
       
       route_1_residents.each do |r|
-        expect(r).to receive(:send_sms).with('delay', '30').once
+        expect(r).to receive(:send_sms).with('type' => 'delay', 'delay_length' => '30').once
       end
       
       subject

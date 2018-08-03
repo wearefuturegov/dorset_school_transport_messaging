@@ -1,7 +1,7 @@
 class Resident < ApplicationRecord
   belongs_to :route
   
-  def send_sms(type, delay_length)
-    SendSMS.enqueue(phone_number, type, route.id, delay_length)
+  def send_sms(params)
+    SendSMS.enqueue(params.merge({phone_number: phone_number, route: route.id}))
   end
 end

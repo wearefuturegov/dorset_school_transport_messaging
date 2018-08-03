@@ -6,10 +6,10 @@ describe SendSMS do
   let(:route) { '4' }
   let(:delay_length) { nil }
   let(:type) { 'cancel' }
-  let(:subject) { SendSMS.run(number, type, route, delay_length) }
+  let(:subject) { SendSMS.run(number: number, type: type, route: route, delay_length: delay_length) }
 
   it 'sends an SMS' do
-    expect(SmsService).to receive(:new).with(number, type, route, delay_length) do
+    expect(SmsService).to receive(:new).with(number: number, type: type, route: route, delay_length: delay_length) do
       stub = double(SmsService)
       expect(stub).to receive(:perform)
       stub

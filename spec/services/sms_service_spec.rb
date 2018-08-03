@@ -2,15 +2,14 @@ require 'rails_helper'
 
 describe SmsService do
   
-  let(:subject) { SmsService.new(number, type, route, delay_length) }
+  let(:subject) { SmsService.new(params) }
   let(:number) { '1234567' }
   let(:route) { '4' }
-  let(:delay_length) { nil }
   
   context 'with a delay' do
     
-    let(:type) { 'delay' }
     let(:delay_length) { 30 }
+    let(:params) { { number: number, route: route, type: 'delay', delay_length: delay_length } }
     
     it 'sends a message' do
       expect { subject.perform }.to change { FakeSMS.messages.count }.by(1)
@@ -24,8 +23,8 @@ describe SmsService do
   end
   
   context 'with a cancellation' do
-    
-    let(:type) { 'cancel' }
+  
+    let(:params) { { number: number, route: route, type: 'cancel' } }
     
     it 'sends a message' do
       expect { subject.perform }.to change { FakeSMS.messages.count }.by(1)

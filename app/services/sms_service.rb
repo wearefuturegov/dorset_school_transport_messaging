@@ -5,12 +5,12 @@ class SmsService
   cattr_accessor :client
   self.client = Twilio::REST::Client
   
-  def initialize(number, type, route, delay_length = nil)
+  def initialize(params)
     @client = self.client.new
-    @number = number
-    @type = type
-    @route = route
-    @delay_length = delay_length
+    @number = params[:number]
+    @type = params[:type]
+    @route = params[:route]
+    @delay_length = params[:delay_length]
   end
   
   def perform
