@@ -7,7 +7,7 @@ class SmsService
   
   def initialize(params)
     @client = self.client.new
-    @number = params[:number]
+    @number = params[:phone_number]
     @type = params[:type]
     @route = params[:route]
     @delay_length = params[:delay_length]
