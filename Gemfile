@@ -63,6 +63,7 @@ group :test do
   gem 'factory_bot'
   gem 'database_cleaner'
   gem 'ffaker'
+  gem 'rspec_junit_formatter'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
