@@ -10,6 +10,8 @@ require 'support/factory_bot'
 require 'support/database_cleaner'
 require 'support/twilio'
 
+Que.mode = :off
+
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
