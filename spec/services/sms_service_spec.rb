@@ -5,6 +5,7 @@ describe SmsService do
   let(:subject) { SmsService.new(params) }
   let(:number) { '1234567' }
   let(:route) { '4' }
+  let(:body) { FakeSMS.messages.first[:body] }
   
   context 'with a delay' do
     
@@ -17,7 +18,30 @@ describe SmsService do
     
     it 'sends the right message' do
       subject.perform
-      expect(FakeSMS.messages.first[:body]).to match(/route #{route} by approximately #{delay_length} minutes./)
+      expect(body).to match(/route #{route}/)
+      expect(body).to match(/has been delayed by approximately #{delay_length} minutes./)
+    end
+    
+    context 'in the morning', :timecop do
+      
+      before { Timecop.freeze('2018-01-01 08:30:00') }
+      
+      it 'gives the correct time of day' do
+        subject.perform
+        expect(body).to match(/morning school bus service/)
+      end
+      
+    end
+    
+    context 'in the afternoon', :timecop do
+      
+      before { Timecop.freeze('2018-01-01 15:30:00') }
+      
+      it 'gives the correct time of day' do
+        subject.perform
+        expect(body).to match(/afternoon school bus service/)
+      end
+      
     end
     
   end
@@ -32,7 +56,8 @@ describe SmsService do
     
     it 'sends the right message' do
       subject.perform
-      expect(FakeSMS.messages.first[:body]).to match(/your school bus service on route #{route} has been cancelled for today/)
+      expect(body).to match(/route #{route}/)
+      expect(body).to match(/has been cancelled for today/)
     end
     
   end

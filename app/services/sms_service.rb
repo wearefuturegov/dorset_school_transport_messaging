@@ -11,6 +11,7 @@ class SmsService
     @type = params[:type]
     @route = params[:route]
     @delay_length = params[:delay_length]
+    @reason = params[:reason]
   end
   
   def perform
@@ -27,19 +28,37 @@ class SmsService
       @type == 'cancel' ? cancellation_message : delay_message
     end
     
-    def cancellation_message
+    def intro
       """
         This is Dorset County Council's school transport service. Unfortunately
-        your school bus service on route #{@route} has been cancelled for today
+        your #{time_of_day} school bus service on route #{@route} on #{date}
+      """.squish
+    end
+    
+    def cancellation_message
+      """
+        #{intro} has been cancelled for today
       """.squish
     end
     
     def delay_message
       """
-        This is Dorset County Council's school transport service. There is a
-        delay to your bus service on route #{@route} by approximately
-        #{@delay_length} minutes.
+        #{intro} has been delayed by approximately #{@delay_length} minutes.
       """.squish
+    end
+    
+    def time_of_day
+      today = Date.today.to_time
+      case Time.now
+      when today.beginning_of_day..today.noon
+        'morning'
+      when today.noon..today.change( hour: 19 )
+        'afternoon'
+      end
+    end
+    
+    def date
+      Date.today.strftime('%e %B %Y')
     end
   
 end
